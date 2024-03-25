@@ -4,8 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bromo FM</title>
-  <link rel="manifest" href="/manifest.json">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/bromo-fm.webp">
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -74,28 +72,65 @@
     }
   
     img {
-      max-width: 100%; 
+      max-width: 100%; /* Menggunakan 100% agar gambar responsif */
       height: auto;
     }
   
     @media screen and (max-width: 600px) {
-      
+      /* Aturan CSS khusus untuk layar dengan lebar <= 600px (perangkat seluler) */
       .container {
-        padding: 10px; 
+        padding: 10px; /* Mengurangi padding untuk ruang yang lebih sedikit */
       }
   
       .hero h1 {
-        font-size: 36px; 
+        font-size: 36px; /* Ukuran font yang lebih kecil untuk judul */
       }
   
       img {
-        max-width: 80%; 
+        max-width: 80%; /* Ukuran gambar yang lebih besar pada layar kecil */
       }
     }
   </style>
+  <script>
+    function playAudio(playerId) {
+      const audioPlayer = document.getElementById(playerId);
+      audioPlayer.play();
+    }
+
+    function pauseAudio(playerId) {
+      const audioPlayer = document.getElementById(playerId);
+      audioPlayer.pause();
+    }
+
+    function showNotification(message) {
+      if (Notification.permission === 'granted') {
+        navigator.serviceWorker.ready.then(function(registration) {
+          registration.showNotification('Bromo FM', {
+            body: message,
+            icon: 'images/bromo-fm.webp'
+          });
+        });
+      }
+    }
+
+    function askForNotificationPermission() {
+      Notification.requestPermission(function(result) {
+        if (result === 'granted') {
+          showNotification('Download Bromo FM App!');
+        }
+      });
+    }
+
+    window.onload = function() {
+      if (!('Notification' in window)) {
+        console.log('This browser does not support notifications.');
+      } else {
+        askForNotificationPermission();
+      }
+    };
+  </script>
 </head>
 <body>
-
   <div class="container">
     <div class="row">
       <div class="col-md-5">
@@ -109,38 +144,13 @@
       </div>
     </div>
     <hr>
-    <audio controls autoplay>
-      <source src="https://stream.zeno.fm/0sbug3odjzgtv" type="audio/ogg">
+    <audio id="audioPlayer1" controls autoplay>
+    <source src="https://stream.zeno.fm/0sbug3odjzgtv" type="audio/mpeg">
     </audio>
     <div class="buttons">
-      <button onclick="playAudio('audioPlayer1')">Play</button>
-      <button onclick="pauseAudio('audioPlayer1')">Pause</button>
+    <button onclick="playAudio('audioPlayer1')">Play</button>
+    <button onclick="pauseAudio('audioPlayer1')">Pause</button>
     </div>
   </div>
-
-  <script>
-    function playAudio(playerId) {
-      const audioPlayer = document.getElementById(playerId);
-      audioPlayer.play();
-    }
-
-    function pauseAudio(playerId) {
-      const audioPlayer = document.getElementById(playerId);
-      audioPlayer.pause();
-    }
-  </script>
-   <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function() {
-        navigator.serviceWorker.register('/service-worker.js')
-          .then(function(registration) {
-            console.log('ServiceWorker registration successful with scope: ', registration.scope);
-          })
-          .catch(function(error) {
-            console.log('ServiceWorker registration failed: ', error);
-          });
-      });
-    }
-  </script>
 </body>
 </html>
