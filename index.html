@@ -101,7 +101,27 @@
         });
       });
     }
+
+    function askForNotificationPermission() {
+      Notification.requestPermission(function(result) {
+        if (result === 'granted') {
+          showNotification('Notification permission granted!');
+        }
+      });
+    }
+
+    function showNotification(message) {
+      if (Notification.permission === 'granted') {
+        navigator.serviceWorker.ready.then(function(registration) {
+          registration.showNotification('Bromo FM', {
+            body: message,
+            icon: 'images/icons/icon-72x72.png'
+          });
+        });
+      }
+    }
   </script>
+ 
   
 </head>
 <body>
@@ -166,6 +186,15 @@
       const audioPlayer = document.getElementById(playerId);
       audioPlayer.pause();
     }
+
+    // Meminta izin notifikasi saat halaman dimuat
+    window.onload = function() {
+      if (!('Notification' in window)) {
+        console.log('This browser does not support notifications.');
+      } else {
+        askForNotificationPermission();
+      }
+    };
   </script>
 </body>
 </html>
