@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bromo FM</title>
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/bromo-fm.webp">
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -72,56 +74,25 @@
     }
   
     img {
-      max-width: 100%; /* Menggunakan 100% agar gambar responsif */
+      max-width: 100%; 
       height: auto;
     }
   
     @media screen and (max-width: 600px) {
-      /* Aturan CSS khusus untuk layar dengan lebar <= 600px (perangkat seluler) */
+      
       .container {
-        padding: 10px; /* Mengurangi padding untuk ruang yang lebih sedikit */
+        padding: 10px; 
       }
   
       .hero h1 {
-        font-size: 36px; /* Ukuran font yang lebih kecil untuk judul */
+        font-size: 36px; 
       }
   
       img {
-        max-width: 80%; /* Ukuran gambar yang lebih besar pada layar kecil */
+        max-width: 80%; 
       }
     }
   </style>
-   <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function() {
-        navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
-          console.log('ServiceWorker registration successful with scope: ', registration.scope);
-        }, function(err) {
-          console.error('ServiceWorker registration failed: ', err);
-        });
-      });
-    }
-
-    function askForNotificationPermission() {
-      Notification.requestPermission(function(result) {
-        if (result === 'granted') {
-          showNotification('Notification permission granted!');
-        }
-      });
-    }
-
-    function showNotification(message) {
-      if (Notification.permission === 'granted') {
-        navigator.serviceWorker.ready.then(function(registration) {
-          registration.showNotification('Bromo FM', {
-            body: message,
-            icon: 'images/icons/icon-72x72.png'
-          });
-        });
-      }
-    }
-  </script>
-  
 </head>
 <body>
 
@@ -138,14 +109,14 @@
       </div>
     </div>
     <hr>
-    <audio id="audioPlayer1" controls autoplay>
-    <source src="https://stream.zeno.fm/0sbug3odjzgtv" type="audio/mpeg">
+    <audio controls autoplay>
+      <source src="https://stream.zeno.fm/0sbug3odjzgtv" type="audio/ogg">
     </audio>
     <div class="buttons">
-    <button onclick="playAudio('audioPlayer1')">Play</button>
-    <button onclick="pauseAudio('audioPlayer1')">Pause</button>
+      <button onclick="playAudio('audioPlayer1')">Play</button>
+      <button onclick="pauseAudio('audioPlayer1')">Pause</button>
     </div>
-</div>
+  </div>
 
   <script>
     function playAudio(playerId) {
@@ -157,15 +128,19 @@
       const audioPlayer = document.getElementById(playerId);
       audioPlayer.pause();
     }
-
-    // Meminta izin notifikasi saat halaman dimuat
-    window.onload = function() {
-      if (!('Notification' in window)) {
-        console.log('This browser does not support notifications.');
-      } else {
-        askForNotificationPermission();
-      }
-    };
+  </script>
+   <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/service-worker.js')
+          .then(function(registration) {
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+          })
+          .catch(function(error) {
+            console.log('ServiceWorker registration failed: ', error);
+          });
+      });
+    }
   </script>
 </body>
 </html>
