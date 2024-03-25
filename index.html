@@ -121,60 +121,31 @@
       }
     }
   </script>
- 
   
 </head>
 <body>
 
-    <div class="container">
-        <div class="row">
-          <div class="col-md-5">
-            <div class="img-box">
-              <img src="images/bromo-fm.webp" alt="Bromo FM Logo">
-            </div>
-          </div>
-          <div class="col-md-7">
-            <h1>Bromo FM</h1>
-            <p>Suatu wadah untuk berkumpul sembari mendengarkan music di era tahun 1990 an.</p>
-          </div>
-        </div>
-        <hr>
-        <h2>One Stream Bromo FM</h2>
-        <audio id="audioPlayer1" controls>
-        <source src="https://stream.zeno.fm/0sbug3odjzgtv" type="audio/mpeg">
-        </audio>
-        <div class="buttons">
-        <button onclick="playAudio('audioPlayer1')">Play</button>
-        <button onclick="pauseAudio('audioPlayer1')">Pause</button>
-        </div>
-    </div>
-
-
-  <br>
-
   <div class="container">
-    <h2>Two Stream Bromo FM</h2>
-    <audio id="audioPlayer2" controls>
-      <source src="https://stream.zeno.fm/0sbug3odjzgtv.m3u" type="audio/mpeg">
+    <div class="row">
+      <div class="col-md-5">
+        <div class="img-box">
+          <img src="images/bromo-fm.webp" alt="Bromo FM Logo">
+        </div>
+      </div>
+      <div class="col-md-7">
+        <h1>Bromo FM</h1>
+        <p>Suatu wadah untuk berkumpul sembari mendengarkan music di era tahun 1990 an. dimana kita masih duduk di Bangku sekolah Menengah ( SMP 1988 ) dan Menengah Atas ( SMA 1991 ).</p>
+      </div>
+    </div>
+    <hr>
+    <audio id="audioPlayer1" controls autoplay>
+    <source src="https://stream.zeno.fm/0sbug3odjzgtv" type="audio/mpeg">
     </audio>
     <div class="buttons">
-      <button onclick="playAudio('audioPlayer2')">Play</button>
-      <button onclick="pauseAudio('audioPlayer2')">Pause</button>
+    <button onclick="playAudio('audioPlayer1')">Play</button>
+    <button onclick="pauseAudio('audioPlayer1')">Pause</button>
     </div>
-  </div>
-
-  <br>
-
-  <div class="container">
-    <h2>Three Stream Bromo FM</h2>
-    <audio id="audioPlayer3" controls>
-      <source src="https://stream.zeno.fm/0sbug3odjzgtv.pls" type="audio/mpeg">
-    </audio>
-    <div class="buttons">
-      <button onclick="playAudio('audioPlayer3')">Play</button>
-      <button onclick="pauseAudio('audioPlayer3')">Pause</button>
-    </div>
-  </div>
+</div>
 
   <script>
     function playAudio(playerId) {
